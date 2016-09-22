@@ -26,7 +26,7 @@ API Server对外提供Kubernetes API，作为Kubernetes系统的入口，封装�
 - 集群内功能模块通过API Server将信息存入etcd，其他模块通过API Server（get、list、watch）读取这些信息，从而实现模块之间的信息交互
 - 本地缓存
 
-![](img/2016-09-18-kube-apiserver/architecture.png)
+![](/img/2016-09-18-kube-apiserver/architecture.png)
 
 ## 4. 集群安全机制
 k8s集群的安全机制比较完备，包括API Server认证、授权、准入控制和保护敏感信息的Secret机制。
@@ -42,6 +42,7 @@ k8s集群的安全机制比较完备，包括API Server认证、授权、准入�
 
 ### 4.2 Authorization授权
 授权流程通过访问策略比较请求上下文的属性（用户名、资源、Namespace），在通过API访问资源之前必须通过访问策略进行校验。访问策略通过API Server启动参数 --authorization-mode指定，目前可以配置的模式有AlwaysDeny、AlwaysAllow（默认）、ABAC、RBAC、Webhook 五种。
+
 - AlwaysDeny：拒绝所有请求
 - AlwaysAllow：接收所有请求
 - ABAC（Attribute-Based Access Control）：基于属性的访问控制。参数 --authorization-policy-file 指定授权策略文件（每一行都是一个json对象）
@@ -63,6 +64,7 @@ k8s集群的安全机制比较完备，包括API Server认证、授权、准入�
 
 ### 4.3 Admission Control准入控制
 Admission Controll 插件用于过滤所有经过认证和授权后的访问API Server的请求，通过参数 --admission-control 指定。
+
 - AlwaysAdmit：允许所有请求通过
 - AlwaysDeny：拒绝所有请求，一般用于测试
 - DenyExecOnPrivileged：拦截所有带有SecurityContext属性的Pod请求，拒绝在一个特权容器中执行命令
@@ -77,6 +79,7 @@ Admission Controll 插件用于过滤所有经过认证和授权后的访问API 
 Secret用于保管私密数据，如密码、OAuth Tokens、SSH Keys等。
 
 *三种Secret type：*
+
 - Opaque
 - kubernetes.io/service-account-token
 - kubernetes.io/dockerconfigjson
@@ -122,6 +125,7 @@ type: kubernetes.io/dockerconfigjson
 > A service account provides an identity for processes that run in a Pod.
 
 Service Account是相对User account的概念。区别如下：
+
 - User account是对用户/管理员而言，而Service Account是对运行在Pod中的进程而言的；
 - User account是全局的，而Service Account是在namespace中的；
 - 新增User Account通常需要复杂的业务流程，而新增Service Account是比较简单的，允许k8s集群的用户创建Service Account来完成特定的任务。
