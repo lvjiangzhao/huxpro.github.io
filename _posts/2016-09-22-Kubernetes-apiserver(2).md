@@ -19,6 +19,7 @@ Kubernetes Version: v1.3.0
 ### 1.1 GET /api/v1/namespaces/{namespace}/pods/{name}的处理过程
 curl -i -v  http://10.8.65.156:8080/api/v1/namespaces/default/pods/pod-multi-containers
 k8s存储在etcd内的对象是api.Pod对象（无版本），通过不同版本的api（如api/v1）访问Pod对象时，最终输出为v1.Pod的json形式，处理过程如下：
+
 1. http client访问/api/v1/pod/xyz，想要获取这个Pod的数据
 2. 从etcd获取到api.Pod对象
 3. api.Pod对象转换为v1.Pod对象
